@@ -7,8 +7,7 @@
 >
   <SurfaceView
     android:id="@+id/mSurfaceView1"
-    android:visibility="visible" 
-    android:layout_width="320px" 
-    android:layout_height="240px">
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
   </SurfaceView> 
 </LinearLayout>

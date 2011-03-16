@@ -57,9 +57,8 @@ public class SyncCamera extends Activity
         //long ts = SyncTimeStamp();
         
         //openMessageDialog(Long.toString(System.currentTimeMillis()/1000));
-        
 
-        Intent intent_nexts = new Intent();
+       Intent intent_nexts = new Intent();
 		intent_nexts.setClass(SyncCamera.this, mCamera.class);
 		startActivity(intent_nexts);        
         
