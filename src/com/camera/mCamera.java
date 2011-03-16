@@ -31,8 +31,8 @@ public class mCamera extends Activity implements SurfaceHolder.Callback
 {
   private Camera mCamera01;
   
-  private ImageView mImageView01;
-  private TextView mTextView01;
+  //private ImageView mImageView01;
+  //private TextView mTextView01;
   private String TAG = "HIPPO";
   private SurfaceView mSurfaceView01;
   private SurfaceHolder mSurfaceHolder01;
@@ -47,10 +47,9 @@ public class mCamera extends Activity implements SurfaceHolder.Callback
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    
-    /* 使應用程式全螢幕執行，不使用title bar */
     requestWindowFeature(Window.FEATURE_NO_TITLE);
-    setContentView(R.layout.main);
+
+    setContentView(R.layout.mcamera);
     
     if(!checkSDCard())
     {
@@ -61,8 +60,7 @@ public class mCamera extends Activity implements SurfaceHolder.Callback
         true
       );
     }
-    
-    /* 取得螢幕解析像素 */
+  
     DisplayMetrics dm = new DisplayMetrics();
     getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -70,38 +68,34 @@ public class mCamera extends Activity implements SurfaceHolder.Callback
     //intScreenY = dm.heightPixels;
     //Log.i(TAG, Integer.toString(intScreenX));
     
-    /* 延伸學習 */
     //import android.content.pm.ActivityInfo;
     //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     
     //mTextView01 = (TextView) findViewById(R.id.myTextView1);
     //mImageView01 = (ImageView) findViewById(R.id.myImageView1);
     
-    /* 以SurfaceView作為相機Preview之用 */
-    //mSurfaceView01 = (SurfaceView) findViewById(R.id.mSurfaceView1);
+    //以SurfaceView作為相機Preview之用 
+    mSurfaceView01 = (SurfaceView) findViewById(R.id.mSurfaceView1);
     
-    /* 繫結SurfaceView，取得SurfaceHolder物件 */
-    //mSurfaceHolder01 = mSurfaceView01.getHolder();
+    // 繫結SurfaceView，取得SurfaceHolder物件 
+    mSurfaceHolder01 = mSurfaceView01.getHolder();
     
-    /* Activity必須實作SurfaceHolder.Callback */
+    // Activity必須實作SurfaceHolder.Callback
     mSurfaceHolder01.addCallback(mCamera.this);
     
-    /* 額外的設定預覽大小設定，在此不使用 */
+    //額外的設定預覽大小設定，在此不使用 
     //mSurfaceHolder01.setFixedSize(320, 240);
     
-    /*
-     * 以SURFACE_TYPE_PUSH_BUFFERS(3)
-     * 作為SurfaceHolder顯示型態 
-     * */
+    //以SURFACE_TYPE_PUSH_BUFFERS(3)作為SurfaceHolder顯示型態
     mSurfaceHolder01.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     
     initCamera();
     
-    /* 自訂重置相機，並關閉相機預覽函數 */
+    //自訂重置相機，並關閉相機預覽函數 
     //resetCamera();
   }
   
-  /* 自訂初始相機函數 */
+  //
   private void initCamera()
   {
     if(!bIfPreview)
@@ -114,25 +108,31 @@ public class mCamera extends Activity implements SurfaceHolder.Callback
     {
       Log.i(TAG, "inside the camera");
       
-      /* 建立Camera.Parameters物件 */
+      // 建立Camera.Parameters物件 
       Camera.Parameters parameters = mCamera01.getParameters();
       
-      /* 設定相片格式為JPEG */
+      // 設定相片格式為JPEG
       parameters.setPictureFormat(PixelFormat.JPEG);
       
-      /* 指定preview的螢幕大小 */
+      // 指定preview的螢幕大小 
       parameters.setPreviewSize(320, 240);
       
-      /* 設定圖片解析度大小 */
+      //設定圖片解析度大小
       parameters.setPictureSize(320, 240);
       
-      /* 將Camera.Parameters設定予Camera */
+      //將Camera.Parameters設定予Camera
       mCamera01.setParameters(parameters);
+
+      try
+      {
+    	  mCamera01.setPreviewDisplay(mSurfaceHolder01);
+      }
+      catch (Exception X)
+      {
+    	  
+      }
       
-      /* setPreviewDisplay唯一的參數為SurfaceHolder */
-      //mCamera01.setPreviewDisplay(mSurfaceHolder01);
-      
-      /* 立即執行Preview */
+      //立即執行Preview
       mCamera01.startPreview();
       bIfPreview = true;
     }
@@ -153,10 +153,10 @@ public class mCamera extends Activity implements SurfaceHolder.Callback
       else 
       {
         /* 記憶卡不存在顯示提示 */
-        mTextView01.setText
-        (
-          getResources().getText(R.string.str_err_nosd).toString()
-        );
+        //mTextView01.setText
+        //(
+          //getResources().getText(R.string.str_err_nosd).toString()
+        //);
       }	  
   }
   
@@ -213,7 +213,7 @@ public class mCamera extends Activity implements SurfaceHolder.Callback
         bos.close();
         
         /* 將拍照下來且儲存完畢的圖檔，顯示出來 */ 
-        mImageView01.setImageBitmap(bm);
+        //mImageView01.setImageBitmap(bm);
         
         /* 顯示完圖檔，立即重置相機，並關閉預覽 */
         resetCamera();
